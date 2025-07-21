@@ -1,60 +1,73 @@
-Driver Drowsiness and Yawn Detection
-This project is a real-time driver drowsiness and yawn detection system using computer vision and deep learning. It employs a Convolutional Neural Network (CNN) trained to classify facial states (eyes open, eyes closed, yawn, no yawn) from webcam images to help increase road safety by alerting users when signs of fatigue or drowsiness are detected.
+# Driver Drowsiness and Yawn Detection
 
-Features
-Real-time detection of yawning and open/closed eye states using a webcam
+This project is a real-time driver drowsiness and yawn detection system using computer vision and deep learning. It uses a Convolutional Neural Network (CNN) trained to classify facial and eye states (open, closed, yawn, no yawn) to alert the driver when signs of fatigue or sleepiness are detected.
 
-Image preprocessing with OpenCV, including grayscale conversion and resizing
+## Features
 
-Deep learning classification using a CNN built and trained with TensorFlow/Keras
+- Real-time webcam-based detection
+- Eye state classification: Open vs Closed
+- Custom CNN model trained on the Drowsiness dataset
+- Yawn detection capability
+- Alarm system using audio alert for drowsiness
+- Efficient preprocessing using OpenCV
+- Model export as `.h5` file for reuse
 
-Automatic alert (sound alarm) when drowsiness is detected based on eye state over consecutive frames
+## Dataset
 
-Modular Python implementation for easy integration and future expansion
+- Source: [Kaggle - Drowsiness Dataset](https://www.kaggle.com/datasets/dheerajperumandla/drowsiness-dataset)
+- Classes:
+  - `Closed`: Eyes closed
+  - `Open`: Eyes open
+  - `yawn`: Subject yawning
+  - `no_yawn`: Subject not yawning
 
-Dataset
-Source: Kaggle Drowsiness Dataset by dheerajperumandla
+Each class is stored in a separate folder under the `/train` directory.
 
-Classes: yawn, no_yawn, Closed, Open
+## Technologies Used
 
-The dataset includes thousands of labeled images representing various eye and mouth states, supporting robust model training
+- Python 3.7+
+- TensorFlow & Keras
+- OpenCV
+- playsound
+- NumPy, Pillow
 
-Installation and Requirements
-Python 3.7+
 
-TensorFlow and Keras
+Make sure the Haar cascade XML files and the trained model (`drowsiness_model.h5`) are available in your project folder.
 
-OpenCV
+## File Structure
+├── detect.py # Main script for detection
+├── drowsiness_model.h5 # Trained model
+├── data/
+│ ├── alarm.mp3 # Alarm sound file
+│ ├── haarcascade_frontalface_default.xml
+│ ├── haarcascade_lefteye_2splits.xml
+│ └── haarcascade_righteye_2splits.xml
 
-playsound (for alarm functionality)
 
-NumPy, Pillow (PIL), Matplotlib (for experiments and visualization)
+## Usage
 
-Install dependencies with:
+1. Clone this repository.
+2. Ensure all dependencies are installed.
+3. Place your trained model and Haar cascades in the designated folders.
+4. Run the script:python detect.py
 
-bash
-pip install tensorflow opencv-python playsound numpy pillow matplotlib
-How It Works
-The webcam feed is continuously processed.
 
-Face and eye regions are detected using Haar cascades.
+Close the camera window or press `q` to exit the detection system.
 
-Each detected eye region is preprocessed and passed through the trained CNN model, which predicts whether the eyes are open or closed.
+## How It Works
 
-If both eyes are detected as closed for a threshold number of consecutive frames, an audible alarm is played.
+- The webcam captures real-time video frames.
+- Haar cascade classifiers locate face and eye regions.
+- Eye regions are grayscaled, resized to 64x64, and passed to a CNN model.
+- If both eyes are classified as 'closed' for 10 consecutive frames, a sound alert is triggered.
+- You can modify the threshold or add support for yawn detection with a similar logic.
 
-Yawn detection can be implemented similarly by training the model to recognize mouth states.
+## Credits
 
-Usage
-Download or train the model (drowsiness_model.h5) and ensure you have the Haar cascade XML files and an alarm audio file in the appropriate directories. Run the main script:
+- Built using TensorFlow, Keras, OpenCV, and Python
 
-bash
-python detect.py
-To customize the alarm threshold or paths, modify the configuration section of the script.
 
-Acknowledgments
-Dataset courtesy of Kaggle user dheerajperumandla
 
-Built using TensorFlow, Keras, OpenCV, and standard Python libraries
 
-This project demonstrates practical, real-time computer vision techniques for helping prevent drowsiness-related accidents, and it can be adapted for integration into vehicle safety platforms or monitoring applications.
+
+
